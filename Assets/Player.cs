@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public float h;
+    float h;
     public float jumpForce;
-    public float speed;
-    public float maxSpeed;
+    public float speed; 
     Rigidbody2D rb;
     bool isGrounded = true; 
 
@@ -28,8 +27,21 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void FixedUpdate()
     {
+        //rb.velocity = new Vector2(h * speed, rb.velocity.y);
+        
         rb.AddForce(new Vector2(h * speed, 0), ForceMode2D.Force);
-
+        if (rb.velocity.x > 10f) // Limit the maximum speed
+        {
+            rb.velocity = new Vector2(5f, rb.velocity.y);
+        }
+        else if (rb.velocity.x < -10f) // Limit the minimum speed
+        {
+            rb.velocity = new Vector2(-5f, rb.velocity.y);
+        }
+        else if (Input.GetButtonUp("Horizontal"))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
 
 
 
