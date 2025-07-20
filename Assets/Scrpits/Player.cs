@@ -8,11 +8,15 @@ public class NewBehaviourScript : MonoBehaviour
     public float jumpForce;
     public float speed; 
     Rigidbody2D rb;
+ 
+    SpriteRenderer spriteRenderer;
     bool isGrounded = true; 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+       
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -24,24 +28,30 @@ public class NewBehaviourScript : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
+
+        if (Input.GetButtonUp("Horizontal")) //좌우 이동후 키보드에서 손을 떄면 좌우 이동 멈춤
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+        }
+
+        if (Input.GetAxisRaw("Horizontal") > 0) //좌우이동 애니메이션
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+
+      
     }
     void FixedUpdate()
     {
-        //rb.velocity = new Vector2(h * speed, rb.velocity.y);
+        rb.velocity = new Vector2(h * speed, rb.velocity.y);
         
-        rb.AddForce(new Vector2(h * speed, 0), ForceMode2D.Force);
-        if (rb.velocity.x > 10f) // Limit the maximum speed
-        {
-            rb.velocity = new Vector2(5f, rb.velocity.y);
-        }
-        else if (rb.velocity.x < -10f) // Limit the minimum speed
-        {
-            rb.velocity = new Vector2(-5f, rb.velocity.y);
-        }
-        else if (Input.GetButtonUp("Horizontal"))
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
+       
 
 
 
@@ -52,9 +62,6 @@ public class NewBehaviourScript : MonoBehaviour
         {
             isGrounded = true;
         }
-        else if (collision.gameObject.CompareTag("Monster"))
-        {
-           
-        }
+        
     }
 }
