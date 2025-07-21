@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
     float h;
     public float jumpForce;
@@ -63,5 +63,15 @@ public class NewBehaviourScript : MonoBehaviour
             isGrounded = true;
         }
         
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EditorOnly"))
+        {
+            Debug.Log("재시작");
+           rb.transform.position = new Vector2(-4, 1); // 플레이어 위치를 초기화
+        }
     }
 }
