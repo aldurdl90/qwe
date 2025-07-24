@@ -13,7 +13,8 @@ public class Monster : MonoBehaviour
     public LayerMask playerLayer;
     float speed = 2f; // 몬스터 이동 속도
     bool isChasing = false; 
-
+    public int Hp = 3; // 몬스터 체력
+  
 
 
 
@@ -37,6 +38,9 @@ public class Monster : MonoBehaviour
         {
             Idle();
         }
+
+       
+
 
         if (rb.velocity.x > 0) // 몬스터가 오른쪽을 바라보게 함
         {
@@ -117,12 +121,48 @@ public class Monster : MonoBehaviour
 
     }  
 
+    
+
    
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red; // 원의 색
         Gizmos.DrawWireSphere(transform.position,5f); // 중심과 반지름
+    }
+
+    public void OnAttacked()
+    {
+        
+       
+        Vector2 dir = new Vector2(palyer.transform.position.x - transform.position.x, 0f).normalized;
+        if(dir.x > 0) // 플레이어가 오른쪽에 있으면
+        {  
+            rb.velocity = Vector2.zero; // 몬스터의 속도를 0으로 설정
+            rb.AddForce(new Vector2(-1f, 0.3f) * 10f, ForceMode2D.Impulse); // 몬스터를 왼쪽으로 밀어냄
+
+
+        }
+        else // 플레이어가 왼쪽에 있으면
+        {
+           rb.velocity = Vector2.zero; // 몬스터의 속도를 0으로 설정
+            rb.AddForce(new Vector2(1f, 0.3f) * 10f, ForceMode2D.Impulse); // 몬스터를 오른쪽으로 밀어냄
+        }
+       
+        gameObject.layer = LayerMask.NameToLayer("isAttacked");
+        Color color = new Color(1f, 1f, 1f, 0.5f); // 반투명 빨간색
+        spriteRenderer.color = color; // 몬스터 색상 변경
+        Invoke("OnlayerMonster", 1.1f);
+        Debug.Log("몬스터가 공격당했습니다"    );
+        
+
+    }
+
+    public void OnlayerMonster()
+    {
+        Color color = new Color(1f, 1f, 1f);
+        spriteRenderer.color = color; // 몬스터 색상 원래대로 변경
+        gameObject.layer = LayerMask.NameToLayer("Monster");
     }
 }
 
