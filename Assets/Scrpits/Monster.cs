@@ -14,7 +14,8 @@ public class Monster : MonoBehaviour
     float speed = 2f; // 몬스터 이동 속도
     bool isChasing = false; 
     public int Hp = 3; // 몬스터 체력
-  
+    public float damage;
+
 
 
 
@@ -163,6 +164,15 @@ public class Monster : MonoBehaviour
         Color color = new Color(1f, 1f, 1f);
         spriteRenderer.color = color; // 몬스터 색상 원래대로 변경
         gameObject.layer = LayerMask.NameToLayer("Monster");
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            palyer.GetComponent<PlayerHP>().TakeDamage(damage);
+           
+        }
     }
 }
 

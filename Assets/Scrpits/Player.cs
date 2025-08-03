@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     CapsuleCollider2D capsuleCollider2D; // 플레이어의 캡슐 콜라이더
     public LayerMask groundLayer; // 바닥 레이어를 지정하기 위한 변수
+    public LayerMask platformLayer; // 플랫폼 레이어를 지정하기 위한 변수  
     public float rayLength = 1f; // 바닥을 감지하기 위한 레이의 길이
     SpriteRenderer spriteRenderer;
     bool isGrounded = true; 
@@ -52,8 +53,13 @@ public class Player : MonoBehaviour
         Debug.DrawRay(rb.position ,Vector3.down, new Color(0, 1, 1));
         RaycastHit2D hit = Physics2D.Raycast
 
+
          (rb.position, Vector2.down, rayLength, groundLayer);
-        if (hit.collider != null && rb.velocity.y == 0) // 바닥이 있으면
+
+        RaycastHit2D hit2 = Physics2D.Raycast
+
+        (rb.position, Vector2.down, rayLength, platformLayer);
+        if ((hit.collider != null || hit2.collider) && rb.velocity.y == 0) // 바닥이 있으면
         {
             isGrounded = true; // 플레이어가 바닥에 닿아있음
         }
@@ -61,7 +67,7 @@ public class Player : MonoBehaviour
         {
             isGrounded = false; // 바닥에 닿아있지 않음
         }
-
+       
     }
     void FixedUpdate()
     {
