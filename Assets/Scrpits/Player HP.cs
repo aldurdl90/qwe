@@ -30,6 +30,7 @@ public class PlayerHP : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         IsAttted();
+        
     }
 
     public IEnumerator IsAttted()

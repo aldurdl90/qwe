@@ -3180,7 +3180,7 @@ GameObject:
   - component: {fileID: 850731702}
   - component: {fileID: 850731703}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: potal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3916,7 +3916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  maxHp: 0
+  maxHp: 100
   gameManager: {fileID: 1868806664}
   healthBar: {fileID: 33513699}
 --- !u!1 &2108015154

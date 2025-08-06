@@ -42,6 +42,8 @@ public class Weapon : MonoBehaviour
             animator.SetTrigger("Attacking");
             nextAttackTime = Time.time + attackCooldown;
         }
+
+        
        
     }
 
